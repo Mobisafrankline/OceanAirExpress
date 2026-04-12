@@ -7,8 +7,8 @@ interface AnimatedSectionProps {
   delay?: number;
   /** How much of the element must be visible before triggering. 0–1 */
   amount?: number;
-  /** Animate upward ('up'), left ('left'), or just fade ('fade') */
-  direction?: "up" | "left" | "fade";
+  /** Animate upward ('up'), left ('left'), right ('right'), or just fade ('fade') */
+  direction?: "up" | "left" | "right" | "fade";
   style?: CSSProperties;
 }
 
@@ -25,13 +25,14 @@ export function AnimatedSection({
   style,
 }: AnimatedSectionProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount });
+  // amount: 0 ensures elements at the very top of the page always trigger
+  const isInView = useInView(ref, { once: true, amount: 0 });
 
   const variants = {
     hidden: {
       opacity: 0,
       y: direction === "up" ? 28 : 0,
-      x: direction === "left" ? -28 : 0,
+      x: direction === "left" ? -28 : direction === "right" ? 28 : 0,
     },
     visible: {
       opacity: 1,
@@ -48,7 +49,11 @@ export function AnimatedSection({
       animate={isInView ? "visible" : "hidden"}
       transition={{ duration: 0.6, ease: "easeOut", delay }}
       className={className}
-      style={style}
+      style={{
+        // KEY FIX: invisible elements must not intercept touch/click events
+        pointerEvents: isInView ? "auto" : "none",
+        ...style,
+      }}
     >
       {children}
     </motion.div>

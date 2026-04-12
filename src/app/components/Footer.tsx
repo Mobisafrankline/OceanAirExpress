@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import { Phone, Mail, MapPin, Globe, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Flag, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 
 const services = [
-  "Air Freight", "Sea Freight", "Road Transport",
+  "Air Freight", "Coastal Shipping", "Road Transport",
   "Rail Freight", "Courier Services", "Last Mile Delivery",
   "Contract Logistics", "Special Projects",
 ];
@@ -18,9 +18,12 @@ const company = [
 ];
 
 const routes = [
-  "New York — London", "Los Angeles — Tokyo",
-  "Chicago — Dubai", "Miami — São Paulo",
-  "Atlanta — Frankfurt", "Houston — Singapore",
+  "New York — Los Angeles",
+  "Chicago — Houston",
+  "Miami — Atlanta",
+  "Dallas — Seattle",
+  "Phoenix — Denver",
+  "Boston — Nashville",
 ];
 
 export function Footer() {
@@ -30,21 +33,13 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-[#C8972B] flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M3 12L21 12M12 3L21 12L12 21" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M3 7L8 12L3 17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.6"/>
-                </svg>
-              </div>
-              <div>
-                <div style={{ fontFamily: "'Sora', sans-serif" }} className="font-bold text-lg leading-tight">Ocean Air Express</div>
-                <div className="text-[#C8972B] text-xs tracking-widest">Inc.</div>
-              </div>
+          <div>
+            <div>
+              <div style={{ fontFamily: "'Sora', sans-serif" }} className="font-bold text-lg leading-tight">Ocean Air Express</div>
+              <div className="text-[#C8972B] text-xs tracking-widest">Inc.</div>
             </div>
             <p className="text-white/60 text-sm leading-relaxed mb-6">
-              A USA-based global transport and logistics company delivering excellence across air, sea, road, and rail networks worldwide.
+              A USA-based domestic transport and logistics company delivering excellence across air, road, rail, and coastal networks — all 48 contiguous states.
             </p>
             <div className="flex flex-col gap-3 text-sm text-white/60">
               <a href="tel:+14709090419" className="flex items-center gap-2 hover:text-[#C8972B] transition-colors">
@@ -111,11 +106,11 @@ export function Footer() {
             </div>
             <div className="mt-6 p-4 bg-[#C8972B]/10 border border-[#C8972B]/20 rounded-xl">
               <div className="flex items-center gap-2 mb-2">
-                <Globe size={14} className="text-[#C8972B]" />
-                <span className="text-xs font-semibold text-[#C8972B] uppercase tracking-wider">Global Coverage</span>
+                <Flag size={14} className="text-[#C8972B]" />
+                <span className="text-xs font-semibold text-[#C8972B] uppercase tracking-wider">Nationwide Coverage</span>
               </div>
               <p className="text-xs text-white/60 leading-relaxed">
-                Operating across 150+ countries with a network of trusted partners worldwide.
+                Serving all 48 contiguous states with DOT & FMCSA certified carriers and regional distribution hubs.
               </p>
             </div>
           </div>
