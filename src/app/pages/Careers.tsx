@@ -177,8 +177,24 @@ export function Careers() {
         </div>
       </section>
 
-      {/* Job Listings */}
+      {/* No Current Openings */}
       <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <SectionLabel>Open Positions</SectionLabel>
+          <h2 style={{ fontFamily: "'Sora', sans-serif" }} className="text-3xl sm:text-4xl font-bold text-[#1E1E1E] mb-4">
+            No Current Openings
+          </h2>
+          <p className="text-gray-500 max-w-xl mx-auto mb-8">
+            We don't have any open roles at the moment, but we're always interested in hearing from exceptional talent. Send us a speculative application and we'll be in touch when the right opportunity arises.
+          </p>
+          <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 border-2 border-[#1A2B5F] text-[#1A2B5F] rounded-xl font-semibold text-sm hover:bg-[#1A2B5F] hover:text-white transition-colors">
+            Send Speculative Application <ArrowRight size={14} />
+          </Link>
+        </div>
+      </section>
+
+      {/* Job Listings */}
+      {/* <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <SectionLabel>Open Positions</SectionLabel>
@@ -242,7 +258,7 @@ export function Careers() {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

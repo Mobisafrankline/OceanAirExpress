@@ -8,7 +8,7 @@ const certifications = [
     name: "Federal Motor Carrier Safety Administration",
     icon: Truck,
     status: "Active",
-    issued: "January 2006",
+    issued: "2025",
     number: "MC-1834729",
     desc: "Authorized to operate as a freight broker and motor carrier across the United States, in full compliance with all federal safety standards.",
     color: "bg-blue-50",
@@ -20,7 +20,7 @@ const certifications = [
     name: "International Air Transport Association",
     icon: Globe,
     status: "Active",
-    issued: "March 2007",
+    issued: "2025",
     number: "CASS 96-3 84427 8",
     desc: "Accredited IATA cargo agent, authorized to handle and book international air cargo on behalf of all major IATA-member airlines worldwide.",
     color: "bg-amber-50",
@@ -32,7 +32,7 @@ const certifications = [
     name: "Federal Maritime Commission",
     icon: Shield,
     status: "Active",
-    issued: "June 2006",
+    issued: "2025",
     number: "OTI License #027841N",
     desc: "Licensed Ocean Transportation Intermediary (OTI), authorized to operate as a Non-Vessel Operating Common Carrier (NVOCC) for international ocean freight.",
     color: "bg-green-50",
@@ -44,7 +44,7 @@ const certifications = [
     name: "U.S. Department of Transportation",
     icon: Award,
     status: "Active",
-    issued: "January 2006",
+    issued: "2025",
     number: "USDOT #3847291",
     desc: "Registered and in full compliance with all U.S. Department of Transportation regulations for domestic and cross-border freight operations.",
     color: "bg-purple-50",
@@ -54,12 +54,12 @@ const certifications = [
 ];
 
 const additionalCerts = [
-  { name: "C-TPAT Member", desc: "Customs-Trade Partnership Against Terrorism — enhanced cargo security protocols.", year: "2009" },
-  { name: "HAZMAT Certified", desc: "Authorized to handle and transport hazardous materials per DOT 49 CFR regulations.", year: "2008" },
-  { name: "ISO 9001:2015", desc: "Internationally recognized quality management system certification.", year: "2012" },
-  { name: "SmartWay Partner", desc: "EPA SmartWay Transport Partnership for fuel-efficient and environmentally responsible freight.", year: "2014" },
-  { name: "NVOCC Bond", desc: "$150,000 continuous performance bond as required by FMC regulations.", year: "2006" },
-  { name: "TSA Certified", desc: "Transportation Security Administration approved indirect air carrier.", year: "2011" },
+  { name: "C-TPAT Member", desc: "Customs-Trade Partnership Against Terrorism — enhanced cargo security protocols.", year: "2025" },
+  { name: "HAZMAT Certified", desc: "Authorized to handle and transport hazardous materials per DOT 49 CFR regulations.", year: "2025" },
+  { name: "ISO 9001:2015", desc: "Internationally recognized quality management system certification.", year: "2025" },
+  { name: "SmartWay Partner", desc: "EPA SmartWay Transport Partnership for fuel-efficient and environmentally responsible freight.", year: "2025" },
+  { name: "NVOCC Bond", desc: "$150,000 continuous performance bond as required by FMC regulations.", year: "2025" },
+  { name: "TSA Certified", desc: "Transportation Security Administration approved indirect air carrier.", year: "2025" },
 ];
 
 function SectionLabel({ children }: { children: ReactNode }) {
