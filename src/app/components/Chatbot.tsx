@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router";
 import {
   MessageSquare, X, Send, Bot, Package, Calculator, Phone,
+  ChevronRight,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -16,6 +17,7 @@ interface Message {
 
 interface BotResponse {
   text: string;
+  /** After a short delay, navigate the user to this path */
   navigateTo?: string;
 }
 
@@ -100,8 +102,8 @@ export function Chatbot() {
   const [typing, setTyping] = useState(false);
   const [unread, setUnread] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const inputRef  = useRef<HTMLInputElement>(null);
-  const navigate  = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -117,7 +119,10 @@ export function Chatbot() {
   }, [open]);
 
   const addBotMessage = (text: string) => {
-    setMessages((prev) => [...prev, { id: `bot-${Date.now()}`, role: "bot", text }]);
+    setMessages((prev) => [
+      ...prev,
+      { id: `bot-${Date.now()}`, role: "bot", text },
+    ]);
     if (!open) setUnread(true);
   };
 
@@ -125,7 +130,8 @@ export function Chatbot() {
     const trimmed = text.trim();
     if (!trimmed) return;
 
-    setMessages((prev) => [...prev, { id: `user-${Date.now()}`, role: "user", text: trimmed }]);
+    const userMsg: Message = { id: `user-${Date.now()}`, role: "user", text: trimmed };
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setTyping(true);
 
@@ -151,26 +157,14 @@ export function Chatbot() {
   };
 
   return (
-    /* Keep FAB in bottom-right; on mobile shrink the right/bottom offsets slightly */
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] flex flex-col items-end gap-3">
-
+    <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3 pointer-events-none">
       {/* ── Chat Window ─────────────────────────────────────── */}
-      {/*
-        KEY FIX: replaced `aria-hidden={!open}` with the HTML `inert` attribute.
-        aria-hidden blocks assistive technology but does NOT remove focus, causing
-        the browser warning. `inert` both hides from AT *and* prevents focus entirely.
-        Also: width is now responsive — full-width minus margins on mobile.
-      */}
       <div
-        className={`
-          w-[calc(100vw-2rem)] sm:w-[360px] lg:w-[390px]
-          bg-white rounded-2xl shadow-2xl border border-gray-100
-          flex flex-col overflow-hidden
-          transition-all duration-300 origin-bottom-right
-          ${open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"}
-        `}
-        style={{ maxHeight: "min(560px, calc(100dvh - 100px))" }}
-        {...(!open ? { inert: "" } : {})}
+        className={`w-[min(350px,calc(100vw-2rem))] sm:w-[390px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right ${
+          open
+            ? "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-0 scale-95 pointer-events-none"
+        }`}
       >
         {/* Header */}
         <div className="bg-[#1A2B5F] px-5 py-4 flex items-center justify-between shrink-0">
@@ -179,7 +173,10 @@ export function Chatbot() {
               <Bot size={18} className="text-white" />
             </div>
             <div>
-              <div style={{ fontFamily: "'Sora', sans-serif" }} className="text-white font-semibold text-sm">
+              <div
+                style={{ fontFamily: "'Sora', sans-serif" }}
+                className="text-white font-semibold text-sm"
+              >
                 OAE Assistant
               </div>
               <div className="flex items-center gap-1.5 mt-0.5">
@@ -200,7 +197,7 @@ export function Chatbot() {
         {/* Messages */}
         <div
           className="flex-1 overflow-y-auto p-4 flex flex-col gap-3 scroll-smooth"
-          style={{ minHeight: "180px", maxHeight: "300px" }}
+          style={{ minHeight: "220px", maxHeight: "310px" }}
         >
           {messages.map((msg) => (
             <div
@@ -238,9 +235,18 @@ export function Chatbot() {
                 <Bot size={13} className="text-[#C8972B]" />
               </div>
               <div className="bg-[#F5F7FA] border border-gray-100 px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0ms" }} />
-                <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "160ms" }} />
-                <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "320ms" }} />
+                <span
+                  className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
+                  style={{ animationDelay: "0ms" }}
+                />
+                <span
+                  className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
+                  style={{ animationDelay: "160ms" }}
+                />
+                <span
+                  className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
+                  style={{ animationDelay: "320ms" }}
+                />
               </div>
             </div>
           )}
@@ -270,7 +276,7 @@ export function Chatbot() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask me anything…"
-            className="flex-1 px-4 py-2.5 bg-[#F5F7FA] border border-gray-200 rounded-xl text-sm text-[#1E1E1E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1A2B5F]/20 focus:border-[#1A2B5F]/30 transition-all min-w-0"
+            className="flex-1 px-4 py-2.5 bg-[#F5F7FA] border border-gray-200 rounded-xl text-sm text-[#1E1E1E] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1A2B5F]/20 focus:border-[#1A2B5F]/30 transition-all"
           />
           <button
             onClick={() => sendMessage(input)}
@@ -287,11 +293,15 @@ export function Chatbot() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close support chat" : "Open support chat"}
-        className={`relative w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 ${
+        className={`pointer-events-auto relative w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 ${
           open ? "bg-[#1A2B5F]" : "bg-[#C8972B]"
         }`}
       >
-        <div className={`absolute inset-0 rounded-full transition-transform duration-300 ${open ? "scale-0" : "scale-100"}`}>
+        <div
+          className={`absolute inset-0 rounded-full transition-transform duration-300 ${
+            open ? "scale-0" : "scale-100"
+          }`}
+        >
           <span className="absolute inset-0 rounded-full bg-[#C8972B] animate-ping opacity-30" />
         </div>
         {open ? (
